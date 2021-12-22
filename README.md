@@ -46,6 +46,6 @@
 
 ![](https://user-images.githubusercontent.com/31919227/147028335-3edb6ebe-96db-4afe-8eef-1b78d8e3cdb1.png)
 
-\<출처 : 공개SW 역량프라자>
+  \<출처 : 공개SW 역량프라자>
 
 참고 : 오픈소스 라이선스 비교표  (https://www.olis.or.kr/license/compareGuide.do)
