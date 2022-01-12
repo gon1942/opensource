@@ -71,5 +71,15 @@ jobs:
 
 
 ```
-
-* CLA 구성이 완료되면 기여자의 서명은 cla.yml 파일에 명시된 디렉토리에 JSON 파일로 저장된다. 
+### 옵션 설명.
+```
+1. 'I AGREE this CLA' 는 기여자가 댓글로 달 문구. 해당 문구는 변경 가능하다.
+2. GITHUB_TOKEN 은 해당 액션이 자동으로 생성, 사용하므로 직접 등록해 두지 않아도 된다.
+3. PERSONAL_ACCESS_TOKEN 은 직접 해당 레포지토리의 settings/Secrets 에 PERSONAL_ACCESS_TOKEN 을 등록해 두어야 한다.
+4. path-to-signatures 는 CLA에 사인을 완료한 사용자의 정보를 저장하는 json 파일의 위치를 의미합니다.
+5. path-to-document 는 CLA 사인을 미완료한 기여자에게 달리는 댓글에서 안내할 CLA 문서의 링크를 의미합니다.
+6. branch 는 위의 path-to-signatures 파일을 가질 branch 명입니다.
+7. allowlist는 CLA 사인을 하지 않아도 PR을 자동 허용할 사용자 리스트입니다. bot의 pr은 CLA 체크를 하지 않도록 설정합니다.
+8. custom-notsigned-prcomment 는 CLA 사인을 완료하지 않은 기여자가 PR을 요청했을때 댓글로 달릴 문구입니다. 해당 문구에서 CLA문서 링크와 사인 방법을 안내해야 합니다.
+9. custom-pr-sign-comment 는 기여자가 CLA 사인을 완료했다는 의미로 PR의 댓글로 달 문구입니다. 해당 문구가 댓글로 달리면 github action이 이를 반영합니다.
+```
