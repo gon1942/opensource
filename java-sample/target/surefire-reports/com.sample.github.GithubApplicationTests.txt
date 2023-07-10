@@ -1,0 +1,4 @@
+-------------------------------------------------------------------------------
+Test set: com.sample.github.GithubApplicationTests
+-------------------------------------------------------------------------------
+Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 2.069 sec - in com.sample.github.GithubApplicationTests

@@ -1,0 +1,9 @@
+com/sample/github/user/UserRepository.class
+com/sample/github/GithubApplication.class
+com/sample/github/user/User$UserBuilder.class
+com/sample/github/model/Address$AddressBuilder.class
+com/sample/github/model/Email$EmailBuilder.class
+com/sample/github/model/Email.class
+com/sample/github/model/Address.class
+com/sample/github/user/UserFindService.class
+com/sample/github/user/User.class
