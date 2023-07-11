@@ -6,11 +6,13 @@
   "scripts": {
     "test": "jest",
     "hi": "aaaaaaaaa",
-    "test:watch": "jest --watch"
+    "test:watch": "jest --watch",
+    "lint": "eslint *.js"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "fs": "^0.0.1-security",
     "jest": "^29.6.1"
   },
   "devDependencies": {
