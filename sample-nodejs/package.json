@@ -7,7 +7,8 @@
     "jest": "jest",
     "hi": "aaaaaaaaa",
     "test:watch": "jest --watch",
-    "lint": "eslint *.js"
+    "lint": "eslint *.js",
+    "prepare": "husky install"
   },
   "author": "",
   "license": "ISC",
