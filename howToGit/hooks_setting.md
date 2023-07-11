@@ -24,7 +24,7 @@ Git Hooks 을 반드시 적용하게끔 강제할 수는 없을까? 만약 프�
 
 1. husky 설치
 $ npm install --save-dev husky
-
+-- npx husky-init && npm install > package.json script 에 'husky install' 등록됨.
 
 2. commit 정책을 정의한다. .huskyrc 파일에 정의하고자 하는 훅과 실행할 명령어를 지정
 
@@ -35,5 +35,7 @@ $ npm install --save-dev husky
         "pre-commit": "echo 'Hello Gabia, woof!'"
     }
 }
+
+-- :npx husky add .husky/pre-commit 'echo "Hello Husky"'
 
 ```
