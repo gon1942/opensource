@@ -5,36 +5,91 @@ echo "pre-commit run"
 #################################################
 # eslint를 사용하여 문법 및 코드 스타일 체크.
 ################################################
+#!/bin/bash
+
+# jest를 이용한 단위 테스크
+chkFileJest() {
+    echo "jest'-------------------------"
+    echo ${0%/*}
+    cd $PWD && npm run jest
+    JEST_RESULT=$?
+    if [[ $status -ne 0 ]]; then
+        echo "Jest tests failed. Aborting commit."
+        exit 1
+    fi
+
+}
+
 chkStatus() {
     if [[ "$1" == 0 ]]; then
-        echo "success"
-        exit 0
+        echo "Commit Success"
+        chkFileJest
+        #exit 0
     else
-        echo "false"
+        echo "Commit False"
         exit 1
     fi
 }
 
-nodeLint() {
+# eslint을 이용하여 변경된 파일 검사.
+#chkFileDiff() {
+#    git diff --cached --name-only | while read FILE; do
+#        if [[ "$FILE" =~ ^sample-nodejs/.+(js)$ ]]; then
+#            echo "Running tests...$FILE"
+#            cd ${0%/*}/../../sample-nodejs && npm run lint
+#           status=$?
+#        fi
+#    done # || chkStatus $status
+#    return $?
+#}
+
+chkFileDiff() {
     git diff --cached --name-only | while read FILE; do
         if [[ "$FILE" =~ ^sample-nodejs/.+(js)$ ]]; then
             echo "Running tests...$FILE"
-            cd ${0%/*}/../../sample-nodejs && npm run lint
+            echo $PWD
+            cd "$PWD/sample-nodejs" && npm run lint
+            #cd "${0%/*}/../../sample-nodejs" && npm run lint
             status=$?
+            if [[ $status -ne 0 ]]; then
+                echo "Lint tests failed. Aborting commit."
+                status=1
+                exit 1
+            else
+                chkFileJest
+
+            fi
         fi
-    done || chkStatus $status
+    done || status=$?
+
+    if [ "$status" == 0 ]; then
+        chkFileJest
+    else
+        exit 1
+    fi
+
 }
 
+changed_files=$(git diff --cached --name-only --diff-filter=ACM)
+if [ -z "$changed_files" ]; then
+    echo "변경된 파일이 없습니다."
+    exit 1
+fi
 
-echo "변경된 파일 :: " $(git diff --cached --name-only --diff-filter=ACM)
+echo "변경된 파일 ::  $changed_files"
 
-while : ; do
-    read -p "커밋을 하시겠습니까? [y/n] " RESPONSE < /dev/tty
+while :; do
+    read -p "커밋을 하시겠습니까? [y/n] " RESPONSE </dev/tty
     case "${RESPONSE}" in
-        [Yy]* ) nodeLint;  break;;
-        [Nn]* ) exit 1;;
+    [Yy]*)
+        chkFileDiff
+        break
+        ;;
+    [Nn]*) exit 1 ;;
     esac
 done
+
+#exit 1
 
 
 ####################################################
