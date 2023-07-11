@@ -2,6 +2,17 @@
 
 echo "pre-commit run"
 
+#################################################
+# lint 
+################################################
+git diff --cached --name-only | while read FILE; do
+if [[ "$FILE" =~ ^sample-nodejs/.+(js)$ ]]; then
+    echo "Running tests...$FILE"
+    cd ${0%/*}/../../sample-nodejs && npm run lint
+fi
+done || exit $?
+
+
 
 ####################################################
 # pre-commit project test 
