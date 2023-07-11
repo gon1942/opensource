@@ -1,17 +1,14 @@
 #!/bin/bash
 
-echo "pre-commit run"
 
 #################################################
 # eslint를 사용하여 문법 및 코드 스타일 체크.
 ################################################
-#!/bin/bash
 
 # jest를 이용한 단위 테스크
 chkFileJest() {
     echo "jest'-------------------------"
-    echo ${0%/*}
-    cd $PWD && npm run jest
+    cd "${0%/*}/../../sample-nodejs" && npm run jest
     JEST_RESULT=$?
     if [[ $status -ne 0 ]]; then
         echo "Jest tests failed. Aborting commit."
@@ -43,21 +40,17 @@ chkStatus() {
 #    return $?
 #}
 
-chkFileDiff() {
-    git diff --cached --name-only | while read FILE; do
+chkFileLint() {
+    echo "#### chkFileLint ####"
+    git diff --cached --name-only  --diff-filter=d | while read FILE; do
         if [[ "$FILE" =~ ^sample-nodejs/.+(js)$ ]]; then
             echo "Running tests...$FILE"
-            echo $PWD
-            cd "$PWD/sample-nodejs" && npm run lint
-            #cd "${0%/*}/../../sample-nodejs" && npm run lint
+            $PWD/sample-nodejs/node_modules/.bin/eslint $FILE
             status=$?
             if [[ $status -ne 0 ]]; then
-                echo "Lint tests failed. Aborting commit."
+                echo  " ESLint 체크 파일 ' $FILE '에서 실패했습니다. 코드를 확인하고 다시 시도하십시오. npm run lint를 통해 ESLint를 수동으로 실행할 수 있습니다. "
                 status=1
                 exit 1
-            else
-                chkFileJest
-
             fi
         fi
     done || status=$?
@@ -70,7 +63,15 @@ chkFileDiff() {
 
 }
 
-changed_files=$(git diff --cached --name-only --diff-filter=ACM)
+
+test(){
+   against=$(git hash-object -t tree /dev/null)
+# If there are whitespace errors, print the offending file names and fail.
+exec git diff-index --check --cached $against --
+
+}
+
+changed_files=$(git diff --cached --name-only )
 if [ -z "$changed_files" ]; then
     echo "변경된 파일이 없습니다."
     exit 1
@@ -82,7 +83,9 @@ while :; do
     read -p "커밋을 하시겠습니까? [y/n] " RESPONSE </dev/tty
     case "${RESPONSE}" in
     [Yy]*)
-        chkFileDiff
+        # test
+        # chkFileJest
+        chkFileLint
         break
         ;;
     [Nn]*) exit 1 ;;
@@ -90,6 +93,9 @@ while :; do
 done
 
 #exit 1
+
+
+
 
 
 ####################################################

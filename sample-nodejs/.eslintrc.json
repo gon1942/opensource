@@ -1,12 +1,22 @@
 {
+    "plugins": [
+//        "prettier"
+    ],
     "env": {
         "browser": true,
         "es2021": true
     },
-    "extends": "google",
+    "extends": [
+        "google",
+        "eslint:recommended"
+//	"plugin:prettier/recommended"
+    ],
     "parserOptions": {
         "ecmaVersion": "latest"
     },
-    "rules": {
-    }
+    "rules": {},
+    // ESLint가 무시할 디렉토리, 파일을 설정
+    "ignorePatterns": [
+        "node_modules/"
+    ]
 }
