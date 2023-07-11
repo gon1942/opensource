@@ -1,7 +1,11 @@
 #!/bin/bash
 
 echo "pre-commit run"
-#exit 1
+
+
+####################################################
+# pre-commit project test 
+####################################################
 #echo "mvn test befero push"
 #
 #CWD=`pwd`
