@@ -3,15 +3,38 @@
 echo "pre-commit run"
 
 #################################################
-# lint 
+# eslint를 사용하여 문법 및 코드 스타일 체크.
 ################################################
-git diff --cached --name-only | while read FILE; do
-if [[ "$FILE" =~ ^sample-nodejs/.+(js)$ ]]; then
-    echo "Running tests...$FILE"
-    cd ${0%/*}/../../sample-nodejs && npm run lint
-fi
-done || exit $?
+chkStatus() {
+    if [[ "$1" == 0 ]]; then
+        echo "success"
+        exit 0
+    else
+        echo "false"
+        exit 1
+    fi
+}
 
+nodeLint() {
+    git diff --cached --name-only | while read FILE; do
+        if [[ "$FILE" =~ ^sample-nodejs/.+(js)$ ]]; then
+            echo "Running tests...$FILE"
+            cd ${0%/*}/../../sample-nodejs && npm run lint
+            status=$?
+        fi
+    done || chkStatus $status
+}
+
+
+echo "변경된 파일 :: " $(git diff --cached --name-only --diff-filter=ACM)
+
+while : ; do
+    read -p "커밋을 하시겠습니까? [y/n] " RESPONSE < /dev/tty
+    case "${RESPONSE}" in
+        [Yy]* ) nodeLint;  break;;
+        [Nn]* ) exit 1;;
+    esac
+done
 
 
 ####################################################
