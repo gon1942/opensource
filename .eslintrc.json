@@ -6,13 +6,20 @@
         "browser": true,
         "node": true
     },
-    "parserOptions": {
-        "ecmaVersion": 6,
-        "sourceType": "module"
-    },
     "ignorePatterns": [
         "node_modules/"
     ],
+    // 코드를 해석하는 parser에 대한 설정
+    "parserOptions": {
+        // 자바스크립트 버전, 7은 ECMA2016
+        "ecmaVersion": 7,
+        // 모듈 export를 위해 import, export를 사용 가능여부를 설정, script는 사용불가
+        "sourceType": "script",
+        // jsx 허용을 설정, back-end 설정이기 때문에 사용 안함
+        "ecmaFeatures": {
+            "jsx": false
+        }
+    },
     "rules": {
         "no-console": "off",
         "prettier/prettier": [
@@ -21,19 +28,10 @@
                 "useTabs": false,
                 "endOfLine": "auto"
             }
-        ],
-        "import/extensions": [
-            "error",
-            "ignorePackages",
-            {
-                "js": "never"
-            }
         ]
     },
     "extends": [
-        "plugin:import/errors",
-        "plugin:import/warnings",
-        "plugin:prettier/recommended",
-        "eslint:recommended"
+        "eslint:recommended",
+        "plugin:prettier/recommended"
     ]
 }
