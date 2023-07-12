@@ -5,7 +5,6 @@
   "main": "index.js",
   "scripts": {
     "jest": "jest",
-    "hi": "aaaaaaaaa",
     "test:watch": "jest --watch",
     "linta": "eslint *.js",
     "lint": "eslint './**/*.js'",
