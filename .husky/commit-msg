@@ -9,7 +9,17 @@ const message = fs.readFileSync(commitMsgFile, 'utf8');
 const isValid = conventionalCommitMessageRegExp.test(message);
 
 if(!isValid) {
-   console.log('Cannot commit: the commit message does not comply with conventional commits standards.');
+    console.log('Cannot commit: 커밋 메시지가 기존 커밋 표준을 준수하지 않습니다.');
+    console.log('# 유형은 다음과 같습니다.')
+    console.log('# feat: 새로운 기능')
+    console.log('# fix : 버그 수정')
+    console.log('# refactor: 프로덕션 코드 리팩토링')
+    console.log('# style: 서식 지정, 세미콜론 누락 등; 코드 변경 없음')
+    console.log('# docs : 문서 변경 사항')
+    console.log('# test : 테스트 추가 또는 리팩토링')
+    console.log('# productin 코드 변경 없음')
+    console.log('# chore: 그런트 작업 업데이트 등, 프로덕션 코 변경 없음')
+
    exitCode = 1;
 }
 
