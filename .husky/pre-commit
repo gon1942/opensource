@@ -10,7 +10,8 @@ status=0
 # jest를 이용한 단위 테스크
 chkFileJest() {
     echo "jest'-------------------------"
-    cd "${0%/*}/../../sample-nodejs" && npm run jest
+    # cd "${0%/*}/../../sample-nodejs" && npm run jest
+    npm run jest
     JEST_RESULT=$?
     if [[ $status -ne 0 ]]; then
         echo "Jest tests failed. Aborting commit."
