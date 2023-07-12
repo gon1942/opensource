@@ -10,9 +10,25 @@
         "ecmaVersion": 6,
         "sourceType": "module"
     },
+    "ignorePatterns": [
+        "node_modules/"
+    ],
     "rules": {
         "no-console": "off",
-        "prettier/prettier": "error"
+        "prettier/prettier": [
+            "error",
+            {
+                "useTabs": false,
+                "endOfLine": "auto"
+            }
+        ],
+        "import/extensions": [
+            "error",
+            "ignorePackages",
+            {
+                "js": "never"
+            }
+        ]
     },
     "extends": [
         "plugin:import/errors",

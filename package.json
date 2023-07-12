@@ -7,7 +7,8 @@
     "jest": "jest",
     "hi": "aaaaaaaaa",
     "test:watch": "jest --watch",
-    "lint": "eslint *.js",
+    "linta": "eslint *.js",
+    "lint": "eslint './**/*.js'",
     "prepare": "husky install"
   },
   "author": "",
@@ -24,6 +25,7 @@
     "eslint-config-prettier": "^8.8.0",
     "eslint-plugin-import": "^2.27.5",
     "eslint-plugin-node": "^11.1.0",
+    "expect": "^29.6.1",
     "husky": "^8.0.0"
   }
 }
