@@ -1,0 +1,28 @@
+#!/bin/bash
+# This is an example of a prepare-pull-request-msg hook you can put into a repos .git/hooks directory.
+# It searches for a pull_request_template.md file and if one is found prepends it to the pull-request message.
+# See https://help.github.com/en/articles/creating-a-pull-request-template-for-your-repository
+FILE="$1"
+DIR="$(dirname "$FILE")"
+TOPDIR="$(dirname "$DIR")"
+
+TEMPLATES=(
+  ".github/pull_request_template.md"
+  "./hooks/pr-template.md"
+)
+
+TMPL=""
+for T in "${TEMPLATES[@]}"; do
+  if [ -f "$TOPDIR/$T" ]; then
+    TMPL="$T";
+    break
+  fi
+done
+
+if [ -n "$TMPL" ]; then
+  cp "$FILE" "$FILE.bak"
+  (
+    cat "$TOPDIR/$TMPL"
+    cat "$FILE.bak"
+  ) > "$FILE"
+fi
