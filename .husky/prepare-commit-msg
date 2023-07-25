@@ -1,25 +1,21 @@
 #!/bin/bash 
 
+COMMIT_EDITMSG=$1
 
-COMMIT_MSG_FILE=$1
-COMMIT_SOURCE=$2
-SHA1=$3
+addBranchNumber() {
+  NAME=$(git branch | grep '*' | sed 's/* //')
+  ISSUE_NUMBER=`echo $NAME | cut -d '-' -f1`
+  DESCRIPTION=$(git config branch."$NAME".description)
+  echo "[#$ISSUE_NUMBER] $(cat $COMMIT_EDITMSG)" > $COMMIT_EDITMSG
+  if [ -n "$DESCRIPTION" ]
+  then
+     echo "" >> $COMMIT_EDITMSG
+     echo $DESCRIPTION >> $COMMIT_EDITMSG
+  fi
+}
 
-BRANCH_NAME=`git rev-parse --abbrev-ref HEAD`
-PROJECT_NAME=''
-PREFIX=''
+MERGE=$(cat $COMMIT_EDITMSG|grep -i 'merge'|wc -l)
 
-if [[ "${BRANCH_NAME}" == *"/"* ]];then
-    PROJECT_NAME=`echo ${BRANCH_NAME} | cut -d '/' -f1`
-    PREFIX=`echo PREFIX ${BRANCH_NAME} | cut -d '/' -f2`
-fi
-
-FIRST_LINE=`head -n1 ${COMMIT_MSG_FILE}`
-
-if [[ ${PROJECT_NAME} == '' ]]; then
-    exit
-fi
-
-if [ -z "$FIRST_LINE" ]; then
-    sed -i ".bak" "1s/^/[$PROJECT_NAME] $PREFIX : /" ${COMMIT_MSG_FILE}
+if [ $MERGE -eq 0 ] ; then
+  addBranchNumber
 fi
