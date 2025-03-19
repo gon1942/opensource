@@ -1,3 +1,0 @@
-# opensourc
-
-eOpps
